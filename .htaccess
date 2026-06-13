@@ -1,0 +1,11 @@
+RewriteEngine On
+
+# Если запрос уже идёт в public/ — не трогаем
+RewriteCond %{REQUEST_URI} !^/public/
+
+# Статика из public/ отдаётся напрямую
+RewriteCond %{DOCUMENT_ROOT}/public%{REQUEST_URI} -f
+RewriteRule ^(.*)$ public/$1 [L]
+
+# Всё остальное — через public/index.php
+RewriteRule ^(.*)$ public/index.php [QSA,L]
