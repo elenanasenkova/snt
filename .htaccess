@@ -1,11 +1,14 @@
+Options -Indexes
 RewriteEngine On
+RewriteBase /
 
-# Если запрос уже идёт в public/ — не трогаем
-RewriteCond %{REQUEST_URI} !^/public/
-
-# Статика из public/ отдаётся напрямую
+# Отдаём статику из public/ напрямую
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{DOCUMENT_ROOT}/public%{REQUEST_URI} -f
-RewriteRule ^(.*)$ public/$1 [L]
+RewriteRule ^(.+)$ public/$1 [L]
 
-# Всё остальное — через public/index.php
-RewriteRule ^(.*)$ public/index.php [QSA,L]
+# Всё остальное — через корневой index.php
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.php [QSA,L]

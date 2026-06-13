@@ -1,6 +1,7 @@
 <?php
 // Защита: удали этот файл после настройки сервера
-define('BASE_PATH', dirname(__DIR__));
+// Работает и из public/ и через root index.php
+define('BASE_PATH', file_exists(__DIR__ . '/../bootstrap.php') ? dirname(__DIR__) : __DIR__);
 
 // Загружаем .env.local если есть
 function _loadEnvDiag(string $path): void {
