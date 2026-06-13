@@ -1,5 +1,6 @@
 ﻿SET FOREIGN_KEY_CHECKS=0;
-
+SET SQL_MODE='NO_AUTO_VALUE_ON_ZERO';
+SET NAMES utf8mb4;
 
 
 
@@ -20,8 +21,7 @@ CREATE TABLE `announcements` (
   KEY `idx_category` (`category`),
   KEY `idx_status` (`status`),
   KEY `idx_created` (`created_at`),
-  FULLTEXT KEY `idx_search` (`title`,`content`),
-  CONSTRAINT `announcements_ibfk_1` FOREIGN KEY (`author_id`) REFERENCES `users` (`id`)
+  FULLTEXT KEY `idx_search` (`title`,`content`)
 ) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Объявления и новости СНТ';
 
 
@@ -87,8 +87,7 @@ CREATE TABLE `documents` (
   PRIMARY KEY (`id`),
   KEY `idx_category` (`category`),
   KEY `idx_uploaded` (`uploaded_by`),
-  KEY `idx_created` (`created_at`),
-  CONSTRAINT `documents_ibfk_1` FOREIGN KEY (`uploaded_by`) REFERENCES `users` (`id`)
+  KEY `idx_created` (`created_at`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Документы: уставы, протоколы, сметы';
 
 
@@ -133,8 +132,7 @@ CREATE TABLE `fee_payments` (
   UNIQUE KEY `uq_fee_plot` (`fee_type_id`,`plot_number`),
   KEY `idx_fee_type` (`fee_type_id`),
   KEY `idx_plot` (`plot_number`),
-  KEY `idx_status` (`status`),
-  CONSTRAINT `fee_payments_ibfk_1` FOREIGN KEY (`fee_type_id`) REFERENCES `fee_types` (`id`) ON DELETE CASCADE
+  KEY `idx_status` (`status`)
 ) ENGINE=InnoDB AUTO_INCREMENT=706 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Учёт оплаты взносов по участкам';
 
 
@@ -157,8 +155,7 @@ CREATE TABLE `fee_types` (
   `allocation_plots` varchar(500) DEFAULT NULL COMMENT 'JSON ',
   PRIMARY KEY (`id`),
   KEY `idx_year` (`year`),
-  KEY `created_by` (`created_by`),
-  CONSTRAINT `fee_types_ibfk_1` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`) ON DELETE SET NULL
+  KEY `created_by` (`created_by`)
 ) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Виды взносов СНТ';
 
 
@@ -188,8 +185,7 @@ CREATE TABLE `finances` (
   KEY `idx_status` (`status`),
   KEY `idx_type` (`type`),
   KEY `idx_due_date` (`due_date`),
-  KEY `idx_fee_type_id` (`fee_type_id`),
-  CONSTRAINT `finances_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
+  KEY `idx_fee_type_id` (`fee_type_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Финансовые операции: взносы, платежи';
 
 
@@ -252,8 +248,7 @@ CREATE TABLE `registrations` (
   PRIMARY KEY (`id`),
   KEY `reviewed_by` (`reviewed_by`),
   KEY `idx_email` (`email`),
-  KEY `idx_status` (`status`),
-  CONSTRAINT `registrations_ibfk_1` FOREIGN KEY (`reviewed_by`) REFERENCES `users` (`id`)
+  KEY `idx_status` (`status`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Заявки на регистрацию в СНТ';
 
 
@@ -290,8 +285,7 @@ CREATE TABLE `sessions` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `token` (`token`),
   KEY `idx_token` (`token`),
-  KEY `idx_user` (`user_id`),
-  CONSTRAINT `sessions_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
+  KEY `idx_user` (`user_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=129 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Активные сессии пользователей';
 
 
@@ -353,8 +347,7 @@ CREATE TABLE `users` (
   UNIQUE KEY `email` (`email`),
   KEY `idx_email` (`email`),
   KEY `idx_role` (`role_id`),
-  KEY `idx_status` (`status`),
-  CONSTRAINT `users_ibfk_1` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`)
+  KEY `idx_status` (`status`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Члены СНТ';
 
 
@@ -377,8 +370,7 @@ CREATE TABLE `votes` (
   PRIMARY KEY (`id`),
   KEY `created_by` (`created_by`),
   KEY `idx_status` (`status`),
-  KEY `idx_created` (`created_at`),
-  CONSTRAINT `votes_ibfk_1` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`)
+  KEY `idx_created` (`created_at`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Голосования и решения';
 
 
@@ -394,8 +386,7 @@ CREATE TABLE `votes_options` (
   `option_text` varchar(255) NOT NULL,
   `vote_count` int(11) DEFAULT 0,
   PRIMARY KEY (`id`),
-  KEY `idx_vote` (`vote_id`),
-  CONSTRAINT `votes_options_ibfk_1` FOREIGN KEY (`vote_id`) REFERENCES `votes` (`id`) ON DELETE CASCADE
+  KEY `idx_vote` (`vote_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Варианты ответов в голосованиях';
 
 
@@ -414,10 +405,7 @@ CREATE TABLE `votes_participants` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `unique_vote` (`vote_id`,`user_id`) COMMENT 'Один голос на человека',
   KEY `option_id` (`option_id`),
-  KEY `idx_user` (`user_id`),
-  CONSTRAINT `votes_participants_ibfk_1` FOREIGN KEY (`vote_id`) REFERENCES `votes` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `votes_participants_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `votes_participants_ibfk_3` FOREIGN KEY (`option_id`) REFERENCES `votes_options` (`id`) ON DELETE CASCADE
+  KEY `idx_user` (`user_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Голоса участников';
 
 
@@ -426,6 +414,5 @@ INSERT INTO `votes_participants` VALUES (5,8,8,20,'2026-06-11 22:26:26'),(6,7,8,
 UNLOCK TABLES;
 
 
-
-
 SET FOREIGN_KEY_CHECKS=1;
+
