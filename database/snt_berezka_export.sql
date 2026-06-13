@@ -1,4 +1,6 @@
-﻿
+﻿SET FOREIGN_KEY_CHECKS=0;
+
+
 
 
 DROP TABLE IF EXISTS `announcements`;
@@ -424,3 +426,6 @@ INSERT INTO `votes_participants` VALUES (5,8,8,20,'2026-06-11 22:26:26'),(6,7,8,
 UNLOCK TABLES;
 
 
+
+
+SET FOREIGN_KEY_CHECKS=1;
