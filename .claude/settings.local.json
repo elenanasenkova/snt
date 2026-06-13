@@ -1,0 +1,32 @@
+{
+  "permissions": {
+    "allow": [
+      "Skill(update-config)",
+      "Skill(update-config:*)",
+      "PowerShell('{\"context_window_usage\":{\"input_tokens\":80000,\"cache_read_tokens\":20000,\"cache_creation_tokens\":5000,\"output_tokens\":3000,\"context_window_limit\":200000}}' | powershell -ExecutionPolicy Bypass -File \"C:\\\\Users\\\\Елена\\\\.claude\\\\context-bar.ps1\")",
+      "PowerShell(& \"C:\\\\xampp\\\\apache_start.bat\")",
+      "PowerShell(& \"C:\\\\xampp\\\\mysql_start.bat\")",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(ls -la \"D:\\\\Проекты claude\\\\сайт снт\\\\snt-berezka — копия \\(2\\)\\\\\" | head -20)",
+      "Bash(xargs grep -l -i \"announcement\")",
+      "Read(//c/xampp/mysql/bin/**)",
+      "Bash(./mysql.exe -u root -e \"DESCRIBE snt_berezka.announcements; SHOW CREATE TABLE snt_berezka.announcements\\\\G\")",
+      "Bash(./mysql.exe -u root snt_berezka -e \"SELECT @@sql_mode; SELECT COUNT\\(*\\) as cnt FROM announcements;\")",
+      "PowerShell(& \"C:\\\\xampp\\\\mysql\\\\bin\\\\mysql.exe\" -u root snt_berezka -e \"ALTER TABLE announcements MODIFY COLUMN category ENUM\\('sale','buy','service','info','wanted'\\) NOT NULL DEFAULT 'info';\")",
+      "Bash(cp \"D:\\\\Проекты claude\\\\сайт снт\\\\snt-berezka — копия \\(2\\)\\\\api\\\\db.php\" \"C:\\\\xampp\\\\htdocs\\\\api\\\\db.php\")",
+      "Bash(cp \"D:\\\\Проекты claude\\\\сайт снт\\\\snt-berezka — копия \\(2\\)\\\\api\\\\announcements.php\" \"C:\\\\xampp\\\\htdocs\\\\api\\\\announcements.php\")",
+      "Bash(cp \"D:\\\\Проекты claude\\\\сайт снт\\\\snt-berezka — копия \\(2\\)\\\\api\\\\fix_charset.sql\" \"C:\\\\xampp\\\\htdocs\\\\api\\\\fix_charset.sql\" && echo \"SQL fix copied\")",
+      "Bash(grep -n \"SET NAMES\\\\|SET CHARACTER SET\\\\|ssis\\\\|ssss\" \"C:\\\\xampp\\\\htdocs\\\\api\\\\db.php\" \"C:\\\\xampp\\\\htdocs\\\\api\\\\announcements.php\")",
+      "Bash(ls \"C:\\\\xampp\\\\htdocs\\\\api\\\\\")",
+      "Bash(ls /c/xampp/htdocs/api/)",
+      "PowerShell($r = Invoke-RestMethod -Uri \"http://localhost/api/auth.php\" -Method POST -Body '{\"email\":\"member@snt-berezka.ru\",\"password\":\"Test1238\"}' -ContentType \"application/json; charset=UTF-8\"; $token = $r.token; Write-Output \"Login OK: $\\($r.success\\)\"; Write-Output \"Token: $token\")",
+      "PowerShell($r = Invoke-RestMethod -Uri \"http://localhost/api/auth.php\" -Method POST -Body '{\"email\":\"chairman@snt-berezka.ru\",\"password\":\"Test1235\"}' -ContentType \"application/json; charset=UTF-8\"; $token = $r.token; Write-Output \"Token: $token\"; Write-Output \"User: $\\($r.user\\)\"; $r | ConvertTo-Json)",
+      "PowerShell($token = \"300914bbbdffa1fb13a2584501cbc83b6c192e50a7eaad12d833f95c6211763a\"; $list = Invoke-RestMethod -Uri \"http://localhost/api/announcements.php?page=1\" -Headers @{\"Authorization\"=\"Bearer $token\"}; $list | ConvertTo-Json -Depth 5)",
+      "Bash(mkdir -p \"D:\\\\Проекты claude\\\\сайт снт\\\\snt-berezka — копия \\(2\\)\\\\.claude\\\\skills\\\\snt-berezka\" \"D:\\\\Проекты claude\\\\сайт снт\\\\snt-berezka — копия \\(2\\)\\\\.claude\\\\skills\\\\snt-parallel-test\" && echo \"OK\")",
+      "Bash(git init *)",
+      "Bash(git config *)",
+      "Bash(git add *)",
+      "Bash(git commit -m 'Initial commit: berezka-php project *)"
+    ]
+  }
+}

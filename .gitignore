@@ -1,0 +1,13 @@
+.env.local
+config.local.php
+/public/uploads/*
+!public/uploads/.gitkeep
+*.log
+/vendor/
+node_modules/
+dist/
+*.rar
+*.zip
+cookies.txt
+.DS_Store
+Thumbs.db
